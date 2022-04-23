@@ -1,0 +1,2 @@
+# ffmpeghandle
+ffmpeg in qt
