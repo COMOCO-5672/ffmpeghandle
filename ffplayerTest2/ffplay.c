@@ -23,6 +23,8 @@
  * simple media player based on the FFmpeg libraries
  */
 
+#pragma comment(lib, "shell32.lib")
+
 #include "config.h"
 #include <inttypes.h>
 #include <math.h>
