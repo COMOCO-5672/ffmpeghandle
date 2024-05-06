@@ -8,7 +8,7 @@ CONFIG -= app_bundle
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 include($$PWD/../ffmpeg-n4.3-19/ffmpeg.pri)
-#INCLUDEPATH += $$PWD/../SDL2-2.0.20/include
+INCLUDEPATH += $$PWD/../SDL2-2.0.20/include
 
 LIBS +=$$PWD/../SDL2-2.0.20/lib/x64/SDL2.lib
 LIBS +=$$PWD/../SDL2-2.0.20/lib/x64/SDL2main.lib
