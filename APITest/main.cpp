@@ -18,7 +18,7 @@ extern "C" {
 #include "libavutil/opt.h"
 #include "libavcodec/avfft.h"
 #include "libswresample/swresample.h"
-    }
+}
 
 
 int main()
@@ -27,6 +27,42 @@ int main()
     avformat_network_init();
 
 
+    // check qsv support
+    AVCodecContext *ctx { nullptr };
+    AVCodec *codec { nullptr };
+    AVBufferRef *device_ref { nullptr };
+
+    int ret;
+
+    ret = av_hwdevice_ctx_create(&device_ref
+        , AV_HWDEVICE_TYPE_QSV
+        , nullptr
+        , nullptr
+        , 0);
+
+    if (ret < 0) {
+        printf("hw_device create failed");
+        return -1;
+    }
+
+    codec = avcodec_find_encoder_by_name("hevc_qsv");
+    if (!codec) {
+        printf("encoder no found");
+        return -1;
+    }
+
+    ctx = avcodec_alloc_context3(codec);
+    if (!ctx) {
+        printf("alloc failed");
+        return -1;
+    }
+
+    ctx->hw_device_ctx = av_buffer_ref(device_ref);
+    ret = avcodec_open2(ctx, codec, nullptr);
+    if (ret < 0) {
+        printf("codec open failed");
+        return -1;
+    }
 
     return 0;
 }
